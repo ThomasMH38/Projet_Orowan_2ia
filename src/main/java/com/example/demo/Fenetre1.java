@@ -7,12 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Fenetre1 extends Application {
@@ -20,45 +16,67 @@ public class Fenetre1 extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Créer les composants de la fenêtre
-        Label label1 = new Label("Fenêtre1");
-        Label label2 = new Label("Stand XXX");
-        Label label3 = new Label("Calcul Time:");
+        Label fenetre1 = new Label("Fenêtre1");
+        Label stand_xxx = new Label("Stand XXX");
+        Label calcul_time = new Label("Calcul Time:");
         TextField textField1 = new TextField();
-        Button button1 = new Button("Valider");
-        Label label4 = new Label("Résultats:");
-        Label label5 = new Label("Time elapsed");
-        Label label6 = new Label("Friction coefficient");
-        LineChart<Number, Number> lineChart1 = createLineChart("Friction coefficient", "Time");
-        LineChart<Number, Number> lineChart2 = createLineChart("Roll speed", "Time");
-        LineChart<Number, Number> lineChart3 = createLineChart("Sigma", "Time");
+        Button valider = new Button("Valider");
+        Label resultats = new Label("Résultats:");
+        Label time_elapsed = new Label("Time elapsed");
+        Label friction_coefficient = new Label("Friction coefficient");
+        Button mode_process_engineer = new Button("Mode process engineer");
+        LineChart<Number, Number> friction_coefficient_list = createLineChart("Friction coefficient", "Time");
+        LineChart<Number, Number> roll_speed_list = createLineChart("Roll speed", "Time");
+        LineChart<Number, Number> sigma_list = createLineChart("Sigma", "Time");
 
         // Ajouter les données aux courbes
-        addDataToLineChart(lineChart1, "Cosinus");
-        addDataToLineChart(lineChart2, "Cosinus");
-        addDataToLineChart(lineChart3, "Cosinus");
+        addDataToLineChart(friction_coefficient_list, "Cosinus");
+        addDataToLineChart(roll_speed_list, "Cosinus");
+        addDataToLineChart(sigma_list, "Cosinus");
 
         // Créer la mise en page de la fenêtre
         GridPane gridPane = new GridPane();
+        gridPane.setGridLinesVisible(true);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(25, 25, 25, 25));
-        gridPane.add(label1, 0, 0);
-        gridPane.add(label2, 2, 0);
-        gridPane.add(label3, 0, 1);
+        gridPane.add(fenetre1, 3, 0);
+        gridPane.add(stand_xxx, 4, 0);
+        gridPane.add(calcul_time, 0, 1);
         gridPane.add(textField1, 1, 1);
-        gridPane.add(button1, 2, 1);
+        gridPane.add(valider, 2, 1);
+        gridPane.add(createTable(), 1, 2);
+        gridPane.add(friction_coefficient_list, 3, 3);
+        gridPane.add(roll_speed_list, 3, 4);
+        gridPane.add(sigma_list, 3, 5);
+        gridPane.add(mode_process_engineer, 4, 1);
 
+        valider.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Do you confirm to launch the calcul ?");
+            alert.setContentText("Click OK to confirm, or Cancel to stop the action.");
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    System.out.println("Action confirmed");
+                    // Code pour lancer le calcul ici
+                }
+            });
+        });
+
+        /*
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(label4, createTable(), lineChart1, lineChart2, lineChart3);
+        vBox.getChildren().addAll(friction_coefficient_list, roll_speed_list, sigma_list);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(gridPane, vBox);
-
-        Scene scene = new Scene(hBox, 800, 600);
+        */
+        Scene scene = new Scene(gridPane, 800, 600);
 
         primaryStage.setTitle("Fenêtre1");
         primaryStage.setScene(scene);
