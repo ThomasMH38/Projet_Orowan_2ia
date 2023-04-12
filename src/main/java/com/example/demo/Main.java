@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class Main{
 
-    static Connection dbConnection;
+    /*static Connection dbConnection;*/
     PreparedStatement insertion;
 
     public static void main(String[] args)
@@ -30,13 +30,7 @@ public class Main{
 
 
         Main m = new Main();
-        m.openDBConnection();
-        //m.insertCoefficientFriction(0,3);
-		/*m.insertFileFormat(0, 0, 0, 0, 10, 10, 0, 0, 0, 0, 1000, 0, 13000, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0);
-		m.insertCsvInput(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		m.insertCsvOutput(0, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
-		m.insertUtilisateur(0, "MEHU", "MDP", "Worker");
-		*/
+        m.openDBConnection("jdbc:h2:tcp://localhost/~/bdd_orowan", "sa", "sa");
         m.clearDB();
 
 
@@ -123,7 +117,7 @@ public class Main{
     // L'ouverture d'une connection est une op�ration lente et co�teuse en resssouces.
     // Une seule connection est suffisante pour g�rer les requ�tes dans un contexte non-concurrent
     // (parall�lisation de requ�tes).
-    public void openDBConnection()
+    /*public void openDBConnection()
     {
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setURL("jdbc:h2:tcp://localhost/~/bdd_orowan");
@@ -136,13 +130,13 @@ public class Main{
             e.printStackTrace();
             System.exit(0);
         }
-    }
+    }*/
 
 
 
 
 
-    public void clearDB() {
+    /*public void clearDB() {
         try {
             Statement stmt = dbConnection.createStatement();
 
@@ -154,7 +148,7 @@ public class Main{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 
@@ -165,16 +159,16 @@ public class Main{
 
 
 
-    public void displayCoefficientFrictions() {
+    /*public void displayCoefficientFrictions() {
 
         Collection<String> coefficientFrictions = retrieveCoefficientFrictions();
 
         for (String s : coefficientFrictions) {
             System.out.println(s);
         }
-    }
+    }*/
 
-    private Collection<String> retrieveCoefficientFrictions() {
+    /*private Collection<String> retrieveCoefficientFrictions() {
 
         ArrayList<String> coefficientFrictions = new ArrayList<>();
 
@@ -202,12 +196,12 @@ public class Main{
             e.printStackTrace();
         }
         return coefficientFrictions;
-    }
+    }*/
 
 
 
     // Ins�re une nouvelle ligne dans la table Coefficient_friction � l'aide du PreparedStatement
-    public void insertCoefficientFriction(int id,int coeff) {
+    /*public void insertCoefficientFriction(int id,int coeff) {
         try {
             PreparedStatement insertion = dbConnection.prepareStatement(
                     "INSERT INTO COEFFICIENT_FRICTION (id_coef_friction, coef_friction) " +
@@ -221,7 +215,7 @@ public class Main{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     // Supprime la ligne d'identifiant id dans la table Coefficient_friction � l'aide du PreparedStatement
@@ -252,15 +246,15 @@ public class Main{
 
 
 
-    public void displayFileFormats() {
+    /*public void displayFileFormats() {
         Collection<String> fileFormats = retrieveFileFormats();
         for (String s : fileFormats) {
             System.out.println(s);
         }
-    }
+    }*/
 
 
-    private Collection<String> retrieveFileFormats() {
+    /*private Collection<String> retrieveFileFormats() {
         ArrayList<String> fileFormats = new ArrayList<>();
         try (Statement st = dbConnection.createStatement()) {
             ResultSet rs = st.executeQuery("SELECT * FROM File_format");
@@ -296,9 +290,9 @@ public class Main{
             e.printStackTrace();
         }
         return fileFormats;
-    }
+    }*/
 
-    public void insertFileFormat(int LP, int MatID, double XTime, double XLoc, double EnThick, double ExThick,
+    /*public void insertFileFormat(int LP, int MatID, double XTime, double XLoc, double EnThick, double ExThick,
                                  double EnTens, double ExTens, double RollForce, double FSlip, double Daiameter,
                                  double RolledLengthForWorkRolls, double YoungModulus, double BackupRollDiameter,
                                  double RolledLengthForBackupRolls, double Mu, double Torque, double AverageSigma,
@@ -358,7 +352,7 @@ public class Main{
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
     // Supprime la ligne d'identifiant id dans la table File_format à l'aide du PreparedStatement
     public void deleteFileFormat(int id) {
@@ -387,16 +381,16 @@ public class Main{
 
 
 
-    public void displayCsvInput() {
+    /*public void displayCsvInput() {
 
         Collection<String> csvInputs = retrieveCsvInputs();
 
         for (String s : csvInputs) {
             System.out.println(s);
         }
-    }
+    }*/
 
-    private Collection<String> retrieveCsvInputs() {
+    /*private Collection<String> retrieveCsvInputs() {
         ArrayList<String> csvInputs = new ArrayList<>();
         try (Statement st = dbConnection.createStatement()) {
             ResultSet rs = st.executeQuery("SELECT * FROM CSV_input");
@@ -418,9 +412,9 @@ public class Main{
             e.printStackTrace();
         }
         return csvInputs;
-    }
+    }*/
 
-    public void insertCsvInput(int cas, double he, double hs, double te, double ts, double diamWr,
+    /*public void insertCsvInput(int cas, double he, double hs, double te, double ts, double diamWr,
                                double wrYoung, double offsetValue, double muIni, double force, double g) {
 
         boolean insertLine = true;
@@ -455,7 +449,7 @@ public class Main{
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
     public void deleteCsvInput(int cas) {
         try {
@@ -482,15 +476,15 @@ public class Main{
 
 
 
-    public void displayCsvOutput() {
+    /*public void displayCsvOutput() {
         Collection<String> csvOutputs = retrieveCsvOutputs();
 
         for (String s : csvOutputs) {
             System.out.println(s);
         }
-    }
+    }*/
 
-    private Collection<String> retrieveCsvOutputs() {
+    /*private Collection<String> retrieveCsvOutputs() {
         ArrayList<String> csvOutputs = new ArrayList<>();
         try (Statement st = dbConnection.createStatement()) {
             ResultSet rs = st.executeQuery("SELECT * FROM CSV_output");
@@ -513,9 +507,9 @@ public class Main{
             e.printStackTrace();
         }
         return csvOutputs;
-    }
+    }*/
 
-    public void insertCsvOutput(int cas, String errors, double offsetYield, double friction, double rollingTorque,
+    /*public void insertCsvOutput(int cas, String errors, double offsetYield, double friction, double rollingTorque,
                                 double sigmaMoy, double sigmaIni, double sigmaOut, double sigmaMax, double forceError, double slipError,
                                 String hasConverged) {
 
@@ -542,7 +536,7 @@ public class Main{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void deleteCsvOutput(int cas) {
         try {
@@ -571,15 +565,15 @@ public class Main{
 
 
 
-    public void displayUtilisateur() {
+    /*public void displayUtilisateur() {
         Collection<String> utilisateurs = retrieveUtilisateurs();
 
         for (String s : utilisateurs) {
             System.out.println(s);
         }
-    }
+    }*/
 
-    private Collection<String> retrieveUtilisateurs() {
+    /*private Collection<String> retrieveUtilisateurs() {
         ArrayList<String> utilisateurs = new ArrayList<>();
         try (Statement st = dbConnection.createStatement()) {
             ResultSet rs = st.executeQuery("SELECT * FROM Utilisateur");
@@ -594,9 +588,9 @@ public class Main{
             e.printStackTrace();
         }
         return utilisateurs;
-    }
+    }*/
 
-    public void insertUtilisateur(int id, String nom, String motDePasse, String role) {
+    /*public void insertUtilisateur(int id, String nom, String motDePasse, String role) {
 
         try {
             PreparedStatement insertion = dbConnection.prepareStatement(
@@ -613,7 +607,7 @@ public class Main{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void deleteUtilisateur(int id) {
         try {
