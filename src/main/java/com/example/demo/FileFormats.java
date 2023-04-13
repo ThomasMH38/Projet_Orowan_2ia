@@ -56,6 +56,10 @@ public class FileFormats extends Bdd{
     @Override
     public void insert(String[] columns) {
 
+        for (int i = 2; i < columns.length; i++) {
+            columns[i] = columns[i].replace(',', '.');
+        }
+
         int LP = Integer.parseInt(columns[0]);
         int MatID = Integer.parseInt(columns[1]);
         double XTime = Double.parseDouble(columns[2]);
@@ -65,21 +69,21 @@ public class FileFormats extends Bdd{
         double EnTens = Double.parseDouble(columns[6]);
         double ExTens = Double.parseDouble(columns[7]);
         double RollForce = Double.parseDouble(columns[8]);
-        double FSlip = Double.parseDouble(columns[8]);
-        double Daiameter = Double.parseDouble(columns[9]);
-        double RolledLengthForWorkRolls = Double.parseDouble(columns[10]);
-        double YoungModulus = Double.parseDouble(columns[11]);
-        double BackupRollDiameter = Double.parseDouble(columns[12]);
-        double RolledLengthForBackupRolls = Double.parseDouble(columns[13]);
-        double Mu = Double.parseDouble(columns[14]);
-        double Torque = Double.parseDouble(columns[15]);
-        double AverageSigma = Double.parseDouble(columns[16]);
-        double InputError = Double.parseDouble(columns[17]);
-        double LubWFIUP = Double.parseDouble(columns[18]);
-        double LubWFILo = Double.parseDouble(columns[19]);
-        double LubOilFIUp = Double.parseDouble(columns[20]);
-        double LubOilFILo = Double.parseDouble(columns[21]);
-        double WorkRollSpeed = Double.parseDouble(columns[22]);
+        double FSlip = Double.parseDouble(columns[9]);
+        double Daiameter = Double.parseDouble(columns[10]);
+        double RolledLengthForWorkRolls = Double.parseDouble(columns[11]);
+        double YoungModulus = Double.parseDouble(columns[12]);
+        double BackupRollDiameter = Double.parseDouble(columns[13]);
+        double RolledLengthForBackupRolls = Double.parseDouble(columns[14]);
+        double Mu = Double.parseDouble(columns[15]);
+        double Torque = Double.parseDouble(columns[16]);
+        double AverageSigma = Double.parseDouble(columns[17]);
+        double InputError = Double.parseDouble(columns[18]);
+        double LubWFIUP = Double.parseDouble(columns[19]);
+        double LubWFILo = Double.parseDouble(columns[20]);
+        double LubOilFIUp = Double.parseDouble(columns[21]);
+        double LubOilFILo = Double.parseDouble(columns[22]);
+        double WorkRollSpeed = Double.parseDouble(columns[23]);
 
         boolean insertLine = true;
 
@@ -132,5 +136,14 @@ public class FileFormats extends Bdd{
         }
     }
 
-
+    @Override
+    public void delete(int id) {
+        try {
+            PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM File_format WHERE LP=?");
+            deletion.setInt(1, id);
+            deletion.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 
 public class FenetreLogin extends Application {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         launch(args);
-    }
+    }*/
 
     @Override
     public void start(Stage primaryStage) {
@@ -41,24 +41,9 @@ public class FenetreLogin extends Application {
         gridPane.add(txtPassword, 1, 1);
         gridPane.add(btnLogin, 1, 2);
 
-        // Ajout d'un événement pour le bouton de connexion
-        btnLogin.setOnAction(event -> {
-            String username = txtUsername.getText();
-            String password = txtPassword.getText();
+        ControleurFenetreLogin controleurFenetreLogin = new ControleurFenetreLogin(txtUsername, txtPassword, btnLogin);
 
-            // Vérification de l'identifiant et du mot de passe
-            if (username.equals("admin") && password.equals("admin")) {
-                System.out.println("Connexion réussie");
-                // Ajout de l'action à réaliser après la connexion réussie
-            } else {
-                // Affichage d'une fenêtre d'alerte en cas d'échec de la connexion
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur de connexion");
-                alert.setHeaderText(null);
-                alert.setContentText("Identifiant ou mot de passe incorrect");
-                alert.showAndWait();
-            }
-        });
+        btnLogin.setOnAction(controleurFenetreLogin);
 
         // Création de la scène principale
         Scene scene = new Scene(gridPane);

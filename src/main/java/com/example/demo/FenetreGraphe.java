@@ -118,6 +118,11 @@ public class FenetreGraphe extends Application {
         primaryStage.setTitle("Fenêtre1");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        ControleurFenetreGraphe controleurFenetreGraphe =
+                new ControleurFenetreGraphe(username, password, mode_process_engineer);
+
+        mode_process_engineer.setOnAction(controleurFenetreGraphe);
     }
 
     // Créer un tableau de deux colonnes

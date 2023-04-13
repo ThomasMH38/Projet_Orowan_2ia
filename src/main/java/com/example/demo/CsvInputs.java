@@ -43,7 +43,13 @@ public class CsvInputs extends Bdd{
 
     @Override
     public void insert(String[] columns) {
+
         int cas = Integer.parseInt(columns[0]);
+
+        for (int i = 1; i < columns.length; i++) {
+            columns[i] = columns[i].replace(',', '.');
+        }
+
         double he = Double.parseDouble(columns[1]);
         double hs = Double.parseDouble(columns[2]);
         double te = Double.parseDouble(columns[3]);
@@ -89,4 +95,14 @@ public class CsvInputs extends Bdd{
         }
     }
 
+    @Override
+    public void delete(int cas) {
+        try {
+            PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM CSV_input WHERE Cas=?");
+            deletion.setInt(1, cas);
+            deletion.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

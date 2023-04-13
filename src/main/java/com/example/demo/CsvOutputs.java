@@ -43,8 +43,14 @@ public class CsvOutputs extends Bdd{
 
     @Override
     public void insert(String[] columns) {
+
         int cas = Integer.parseInt(columns[0]);
         String errors = columns[1];
+
+        for (int i = 2; i < 10; i++) {
+            columns[i] = columns[i].replace(',', '.');
+        }
+
         double offsetYield = Double.parseDouble(columns[2]);
         double friction = Double.parseDouble(columns[3]);
         double rollingTorque = Double.parseDouble(columns[4]);
@@ -76,6 +82,17 @@ public class CsvOutputs extends Bdd{
 
             insertion.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void delete(int cas) {
+        try {
+            PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM CSV_output WHERE Cas=?");
+            deletion.setInt(1, cas);
+            deletion.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

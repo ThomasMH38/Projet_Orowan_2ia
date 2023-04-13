@@ -4,11 +4,6 @@ import java.sql.*;
 
 public class MoyenneFriction {
 
-    private final Connection conn;
-
-    public MoyenneFriction(Connection conn) {
-        this.conn = conn;
-    }
 
 
     public void executeMoyenneFriction(Connection conn) {

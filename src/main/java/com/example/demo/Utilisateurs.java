@@ -57,5 +57,62 @@ public class Utilisateurs extends Bdd{
         }
     }
 
+    @Override
+    public void delete(int id) {
+        try {
+            PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM Utilisateur WHERE id=?");
+            deletion.setInt(1, id);
+            deletion.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean verifConnexion(String nom, String motDePasse) {
+        String query = "SELECT COUNT(*) FROM Utilisateur WHERE Nom = ? AND MotDePasse = ?";
+        try (PreparedStatement pstmt = dbConnection.prepareStatement(query)) {
+            pstmt.setString(1, nom);
+            pstmt.setString(2, motDePasse);
+            ResultSet rs = pstmt.executeQuery();
+            // retourne la valeur de la première colonne de la ligne courante du résultat de la requête SQL sous forme d'un entier
+            rs.next();
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            System.err.println("Error during authentication: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public String getRole(String nom, String motDePasse) {
+        String role = null;
+        String query = "SELECT Role FROM Utilisateur WHERE Nom = ? AND MotDePasse = ?";
+        try (PreparedStatement pstmt = dbConnection.prepareStatement(query)) {
+            pstmt.setString(1, nom);
+            pstmt.setString(2, motDePasse);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    role = rs.getString("Role");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error during role retrieval: " + e.getMessage());
+        }
+        System.out.println(role);
+        return role;
+    }
+
+
+
+    public void changeRole(String nom, String nouveauRole) {
+        try {
+            String query = "UPDATE Utilisateur SET Role = ? WHERE Nom = ?";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
+            preparedStatement.setString(1, nouveauRole);
+            preparedStatement.setString(2, nom);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error during role change: " + e.getMessage());
+        }
+    }
 
 }

@@ -17,16 +17,24 @@ import java.util.Scanner;
 
 public class Main{
 
-    /*static Connection dbConnection;*/
-    PreparedStatement insertion;
+    static Utilisateurs utilisateurs;
+    static CsvInputs csvInputs;
+    static CsvOutputs csvOutputs;
+    static FileFormats fileFormats;
+    static CoefficientFrictions coefficientFrictions;
+
 
     public static void main(String[] args)
     {
+        utilisateurs = new Utilisateurs();
+        csvInputs = new CsvInputs();
+        csvOutputs = new CsvOutputs();
+        fileFormats = new FileFormats();
+        coefficientFrictions = new CoefficientFrictions();
 
 
-        Main m = new Main();
-        m.openDBConnection("jdbc:h2:tcp://localhost/~/bdd_orowan", "sa", "sa");
-        m.clearDB();
+        utilisateurs.openDBConnection("jdbc:h2:tcp://localhost/~/bdd_orowan", "sa", "sa");
+        utilisateurs.clearDB();
 
 
         try {
@@ -35,64 +43,57 @@ public class Main{
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split("; ");
+                String[] utile = new String[11];
+                utile[0] = parts[0];
+                utile[1] = parts[4];
+                utile[2] = parts[5];
+                utile[3] = parts[6];
+                utile[4] = parts[7];
+                utile[5] = parts[10];
+                utile[6] = parts[12];
+                utile[7] = parts[17];
+                utile[8] = parts[15];
+                utile[9] = parts[8];
+                utile[10] = parts[9];
 
-                int part0 = Integer.parseInt(parts[0]);
-                int part1 = Integer.parseInt(parts[1]);
-                for (int i = 2; i < parts.length; i++) {
-                    parts[i] = parts[i].replace(',', '.');
-                }
-                double part2 = Double.parseDouble(parts[2]); double part3 = Double.parseDouble(parts[3]);double part4 = Double.parseDouble(parts[4]);
-                double part5 = Double.parseDouble(parts[5]);double part6 = Double.parseDouble(parts[6]);double part7 = Double.parseDouble(parts[7]);
-                double part8 = Double.parseDouble(parts[8]);double part9 = Double.parseDouble(parts[9]);double part10 = Double.parseDouble(parts[10]);
-                double part11 = Double.parseDouble(parts[11]);double part12 = Double.parseDouble(parts[12]);double part13 = Double.parseDouble(parts[13]);
-                double part14 = Double.parseDouble(parts[14]);double part15 = Double.parseDouble(parts[15]);double part16 = Double.parseDouble(parts[16]);
-                double part17 = Double.parseDouble(parts[17]);double part18 = Double.parseDouble(parts[18]);double part19 = Double.parseDouble(parts[19]);
-                double part20 = Double.parseDouble(parts[20]);double part21 = Double.parseDouble(parts[21]);double part22 = Double.parseDouble(parts[22]);
-                double part23 = Double.parseDouble(parts[23]);
-
-                m.insertFileFormat(part0, part1, part2, part3, part4, part5, part6, part7, part8, part9, part10, part11, part12,
-                        part13, part14, part15, part16, part17, part18, part19, part20, part21, part22, part23);
-                m.insertCsvInput(part0, part4, part5, part6, part7, part10, part12, part17, part15, part8, part9);
+                fileFormats.insert(parts);
+                csvInputs.insert(utile);
             }
 
-
             scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Le fichier n'a pas été trouvé.");
+        }
+
+        catch (FileNotFoundException e) {
+            System.out.println("Le fichier n'a pas été trouvé. \n");
             e.printStackTrace();
         }
-        m.convertTableToTxt("CSV_input","CSV_input.txt");
-        System.out.print("Début Orowan");
+
+        utilisateurs.convertTableToTxt("CSV_input","CSV_input.txt");
+        System.out.print("Début Orowan \n");
         OrowanFunction.executer("CSV_input.txt");
-        System.out.print("Fin Orowan");
+        System.out.print("Fin Orowan \n");
 
         try {
             File file = new File("CSV_output.txt");
             Scanner scanner = new Scanner(file);
             scanner.nextLine();
+
             while (scanner.hasNextLine()) {
+
                 String line = scanner.nextLine();
                 String[] parts = line.split("\t");
 
-                int part0 = Integer.parseInt(parts[0]);
-                String part1 = parts[1];
-                for (int i = 2; i < 10; i++) {
-                    parts[i] = parts[i].replace(',', '.');
-                }
-                double part2 = Double.parseDouble(parts[2]); double part3 = Double.parseDouble(parts[3]);double part4 = Double.parseDouble(parts[4]);
-                double part5 = Double.parseDouble(parts[5]);double part6 = Double.parseDouble(parts[6]);double part7 = Double.parseDouble(parts[7]);
-                double part8 = Double.parseDouble(parts[8]);double part9 = Double.parseDouble(parts[9]);double part10 = Double.parseDouble(parts[10]);
-                String part11 = parts[11];
-
-                m.insertCsvOutput(part0, part1, part2, part3, part4, part5, part6, part7, part8, part9, part10, part11);
+                csvOutputs.insert(parts);
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
+
+        }
+        catch (FileNotFoundException e) {
             System.out.println("Le fichier n'a pas été trouvé.");
             e.printStackTrace();
         }
-        // Création de l'instance de la classe CSVOutputProcessor
-        MoyenneFriction processor = new MoyenneFriction(dbConnection);
+
+        utilisateurs.moyenneFriction();
 
 
         Application.launch(FenetreLogin.class, args);

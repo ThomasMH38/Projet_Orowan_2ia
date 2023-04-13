@@ -55,5 +55,14 @@ public class CoefficientFrictions extends Bdd{
         }
     }
 
-
+    @Override
+    public void delete(int id) {
+        try {
+            PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM COEFFICIENT_FRICTION WHERE id_coef_friction=?");
+            deletion.setInt(1, id);
+            deletion.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
