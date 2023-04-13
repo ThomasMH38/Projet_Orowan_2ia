@@ -58,6 +58,21 @@ public class FenetreProcessEngineer extends Application{
         PasswordField text_update_update_user_new_mdp = new PasswordField();
         TextField text_changer_role_nom_utilisateur = new TextField();
 
+        Button valider_add_user = new Button("Valider");
+        Button valider_remove_user = new Button("Valider");
+        Button valider_update_user = new Button("Valider");
+        Button valider_change_roll = new Button("Valider");
+
+        ControleurFenetreProcessEngineer controleurFenetreProcessEngineer =
+                new ControleurFenetreProcessEngineer(text_add_user_username, text_add_user_mdp,
+                        text_remove_user_username, text_remove_user_mdp,
+                        text_update_update_user_old_username, text_update_update_user_new_username,
+                        text_update_update_user_old_mdp, text_update_update_user_new_mdp,
+                        text_changer_role_nom_utilisateur, valider_add_user, valider_remove_user,
+                        valider_update_user, valider_change_roll);
+
+
+
         ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("worker", "process engineer"));
         // Configurer le choix déroulant
         comboBox.setPromptText("Selectionner un role");
@@ -79,10 +94,7 @@ public class FenetreProcessEngineer extends Application{
         TextField forward_slip_min = new TextField();
         TextField forward_slip_max = new TextField();
 
-        Button valider_add_user = new Button("Valider");
-        Button valider_remove_user = new Button("Valider");
-        Button valider_update_user = new Button("Valider");
-        Button valider_change_roll = new Button("Valider");
+
 
 
         Button repasser_fenetre1 = new Button("Back");

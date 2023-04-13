@@ -31,18 +31,15 @@ public class ControleurFenetreLogin implements EventHandler<ActionEvent> {
 
         if (utilisateurs.verifConnexion(username, password)) {
             System.out.println("Connexion réussie");
-            // Ajout de l'action à réaliser après la connexion réussie
 
             Stage stage = (Stage) btnLogin.getScene().getWindow();
             stage.close();
 
-            // Ouvrir la fenêtre principale
             FenetreGraphe fenetreGraphe = new FenetreGraphe(username, password);
             fenetreGraphe.start(stage);
         }
 
         else {
-            // Affichage d'une fenêtre d'alerte en cas d'échec de la connexion
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de connexion");
             alert.setHeaderText(null);
