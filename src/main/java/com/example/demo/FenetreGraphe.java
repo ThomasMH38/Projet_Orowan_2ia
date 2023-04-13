@@ -11,7 +11,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Fenetre1 extends Application {
+public class FenetreGraphe extends Application {
+
+    private String username;
+    private String password;
+
+    public FenetreGraphe(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,6 +73,35 @@ public class Fenetre1 extends Application {
                 }
             });
         });
+
+        /*
+        mode_process_engineer.setOnAction(e -> {
+            // Vérification de la condition 1
+            boolean condition1 = // Code pour vérifier que l'utilisateur est le process engineer ;
+            if (condition1) {
+                // Action1
+                action1();
+            } else {
+                // Vérification de la condition 2
+                boolean condition2 = // Code pour vérifier que l'utilisateur est le worker;
+                if (condition2) {
+
+
+                    // Affichage d'un message d'erreur
+                    Alert alerte = new Alert(Alert.AlertType.ERROR);
+                    alerte.setTitle("Erreur");
+                    alerte.setHeaderText(null);
+                    alerte.setContentText("Vous n'avez pas les droits.");
+                    alerte.showAndWait();
+                }
+            }
+        }
+    );
+         */
+
+
+
+
 
         /*
         VBox vBox = new VBox();

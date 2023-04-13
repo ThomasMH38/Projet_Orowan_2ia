@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class LoginWindow extends Application {
+public class FenetreLogin extends Application {
 
     public static void main(String[] args) {
         launch(args);
