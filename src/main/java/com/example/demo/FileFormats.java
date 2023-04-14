@@ -6,10 +6,47 @@ import java.util.Collection;
 
 public class FileFormats extends Bdd{
 
-
+    double xLoc_min;
+    double enThick_min;
+    double enThick_max;
+    double exThick_min;
+    double exThick_max;
+    double enTens_min;
+    double enTens_max;
+    double exTens_min;
+    double exTens_max;
+    double rollForce_min;
+    double rollForce_max;
+    double fSlip_min;
+    double fSlip_max;
+    double daiameter_min;
+    double daiameter_max;
+    double youngModulus_min;
+    double youngModulus_max;
+    double mu_min;
+    double mu_max;
 
     public FileFormats(){
         super(Bdd.dbConnection);
+        this.xLoc_min = 0;
+        this.enThick_min = 1;
+        this.enThick_max = 70;
+        this.exThick_min = 1;
+        this.exThick_max = 70;
+        this.enTens_min = 0;
+        this.enTens_max = 50;
+        this.exTens_min = 0;
+        this.exTens_max = 50;
+        this.rollForce_min = 0;
+        this.rollForce_max = 5000;
+        this.fSlip_min = 0;
+        this.fSlip_max = 20;
+        this.daiameter_min = 500;
+        this.daiameter_max = 1500;
+        this.youngModulus_min = 120000;
+        this.youngModulus_max = 250000;
+        this.mu_min = 0.05;
+        this.mu_max = 1;
     }
 
     @Override
@@ -87,10 +124,11 @@ public class FileFormats extends Bdd{
 
         boolean insertLine = true;
 
-        if (XLoc < 0 || EnThick < 1 || EnThick > 70 || ExThick < 1 || ExThick > 70 ||
-                EnTens < 0 || EnTens > 50 || ExTens < 0 || ExTens > 50 || RollForce < 0 || RollForce > 5000 ||
-                FSlip < 0 || FSlip > 20 || Daiameter < 500 || Daiameter > 1500 ||
-                YoungModulus < 120000 || YoungModulus > 250000 || Mu < 0.05 || Mu > 1) {
+        if (XLoc < xLoc_min || EnThick < enThick_min || EnThick > enThick_max ||
+                ExThick < exThick_min || ExThick > exThick_max || EnTens < enTens_min || EnTens > enTens_max ||
+                ExTens < exTens_min || ExTens > exTens_max || RollForce < rollForce_min || RollForce > rollForce_max ||
+                FSlip < fSlip_min || FSlip > fSlip_max || Daiameter < daiameter_min || Daiameter > daiameter_max ||
+                YoungModulus < youngModulus_min || YoungModulus > youngModulus_max || Mu < mu_min || Mu > mu_max) {
             insertLine = false;
         }
 
