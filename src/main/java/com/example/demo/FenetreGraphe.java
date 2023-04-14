@@ -7,10 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -44,6 +41,8 @@ public class FenetreGraphe extends Application {
         LineChart<Number, Number> friction_coefficient_list = createLineChart("Time", "Friction coefficient");
         Button deconnexion = new Button("Deconnexion");
         GridPane createTable = createTable();
+        ListView<String> listViewCoefFrictions = new ListView<String>();
+
 
         ComboBox<String> comboBox_select_stand = new ComboBox<>(FXCollections.observableArrayList("Stand F2", "Stand F3"));
         // Configurer le choix déroulant
@@ -67,7 +66,7 @@ public class FenetreGraphe extends Application {
         gridPane.add(calcul_time, 0, 1);
         gridPane.add(textField1, 1, 1);
         gridPane.add(valider, 2, 1);
-        gridPane.add(createTable, 1, 5);
+        gridPane.add(listViewCoefFrictions, 1, 3);
         gridPane.add(roll_speed_list, 3, 4);
         gridPane.add(friction_coefficient_list, 3, 3);
         gridPane.add(sigma_list, 3, 5);
@@ -83,7 +82,8 @@ public class FenetreGraphe extends Application {
 
         ControleurFenetreGraphe controleurFenetreGraphe =
                 new ControleurFenetreGraphe(username, password, mode_process_engineer, valider, gridPane,
-                        friction_coefficient_list,roll_speed_list,sigma_list, deconnexion, createTable);
+                        friction_coefficient_list,roll_speed_list,sigma_list, deconnexion,
+                        listViewCoefFrictions);
 
         mode_process_engineer.setOnAction(controleurFenetreGraphe);
         valider.setOnAction(controleurFenetreGraphe);

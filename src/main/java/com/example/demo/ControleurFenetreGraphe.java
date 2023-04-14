@@ -1,8 +1,11 @@
 package com.example.demo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -27,13 +30,14 @@ public class ControleurFenetreGraphe implements EventHandler<ActionEvent> {
 
     LineChart<Number, Number> roll_speed_list;
     LineChart<Number, Number> sigma_list;
-    GridPane createTable;
+    ListView listViewCoefFrictions;
+
 
     public ControleurFenetreGraphe(String username, String password, Button mode_process_engineer,
                                    Button valider, GridPane gridPane,
                                    LineChart<Number, Number> friction_coefficient_list,
                                    LineChart<Number, Number> roll_speed_list,
-                                   LineChart<Number, Number> sigma_list, Button deconnexion, GridPane createTable){
+                                   LineChart<Number, Number> sigma_list, Button deconnexion,ListView listViewCoefFrictions){
 
         this.username = username;
         this.password = password;
@@ -45,7 +49,7 @@ public class ControleurFenetreGraphe implements EventHandler<ActionEvent> {
         this.roll_speed_list = roll_speed_list;
         this.sigma_list = sigma_list;
         this.deconnexion = deconnexion;
-        this.createTable = createTable;
+        this.listViewCoefFrictions = listViewCoefFrictions;
 
     }
 
@@ -65,6 +69,12 @@ public class ControleurFenetreGraphe implements EventHandler<ActionEvent> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+        yAxis.setAutoRanging(false);
+
+        yAxis.setLowerBound(0.08);
+        yAxis.setUpperBound(0.25);
+
         lineChart.getData().clear();
         lineChart.getData().add(series);
     }
@@ -85,6 +95,15 @@ public class ControleurFenetreGraphe implements EventHandler<ActionEvent> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+        yAxis.setAutoRanging(false);
+
+        yAxis.setLowerBound(90000);
+        yAxis.setUpperBound(123000);
+
+        lineChart.setHorizontalGridLinesVisible(false); // désactiver les lignes de la grille horizontale
+
         lineChart.getData().clear();
         lineChart.getData().add(series);
     }
@@ -105,34 +124,34 @@ public class ControleurFenetreGraphe implements EventHandler<ActionEvent> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+        yAxis.setAutoRanging(false);
+
+        yAxis.setLowerBound(140);
+        yAxis.setUpperBound(210);
+
         lineChart.getData().clear();
         lineChart.getData().add(series);
     }
 
-    private void valCreateTable(GridPane createTable) {
-        try {
-            Statement stmt = utilisateurs.dbConnection.createStatement();
+    private void addVallistViewCoefFrictions(ListView listViewCoefFrictions){
+        try{Statement stmt = utilisateurs.dbConnection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id_coef_friction, coef_friction FROM Coefficient_friction");
-
-            int i = 1;
-            while (rs.next() && i < 11) {
+            ObservableList<String> items = FXCollections.observableArrayList();
+            while (rs.next()) {
                 int id = rs.getInt("id_coef_friction");
-                double coef = rs.getDouble("coef_friction");
-                double time = id * 0.2;
-
-                Label label_coef = new Label(String.valueOf(coef));
-                Label label_time = new Label(String.valueOf(time));
-
-                createTable.add(label_time, 0, i);
-                createTable.add(label_coef, 1, i);
-
-                i += 1;
+                double value = rs.getDouble("coef_friction");
+                items.add("Time : " + String.format("%.3f", id * 0.2) + " Coef Friction : " + String.format("%.3f", value));
             }
-        } catch (SQLException e) {
+            rs.close();
+            stmt.close();
+            listViewCoefFrictions.setItems(items);
+        }catch (SQLException e) {
             e.printStackTrace();
         }
-    }
 
+    }
 
     @Override
     public void handle(ActionEvent actionEvent) {
@@ -172,7 +191,7 @@ public class ControleurFenetreGraphe implements EventHandler<ActionEvent> {
                     addCourbeCoefFriction(friction_coefficient_list, "Coefficient de friction");
                     addRollSpeed(roll_speed_list, "Roll speed");
                     addSigma(sigma_list, "Sigma");
-                    valCreateTable(createTable);
+                    addVallistViewCoefFrictions(listViewCoefFrictions);
                     gridPane.add(friction_coefficient_list, 3, 3);
                     gridPane.add(roll_speed_list,3,4);
                     gridPane.add(sigma_list,3,5);
