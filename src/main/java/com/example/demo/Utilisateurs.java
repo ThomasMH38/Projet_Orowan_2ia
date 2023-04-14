@@ -33,10 +33,10 @@ public class Utilisateurs extends Bdd{
     @Override
     public void insert(String[] columns) {
 
-        //int id = Integer.parseInt(columns[0]);
-        String nom = columns[1];
-        String motDePasse = columns[2];
-        String role = columns[3];
+
+        String nom = columns[0];
+        String motDePasse = columns[1];
+        String role = columns[2];
 
         try {
             PreparedStatement insertion = dbConnection.prepareStatement(
@@ -62,6 +62,16 @@ public class Utilisateurs extends Bdd{
         try {
             PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM Utilisateur WHERE id=?");
             deletion.setInt(1, id);
+            deletion.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(String name){
+        try {
+            PreparedStatement deletion = dbConnection.prepareStatement("DELETE FROM Utilisateur WHERE Nom=?");
+            deletion.setString(1, name);
             deletion.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,6 +123,18 @@ public class Utilisateurs extends Bdd{
         }
         System.out.println(role);
         return role;
+    }
+
+    public void changeMDP(String nom, String mdp){
+        try {
+            String query = "UPDATE Utilisateur SET MotDePasse = ? WHERE Nom = ?";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(query);
+            preparedStatement.setString(1, mdp);
+            preparedStatement.setString(2, nom);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error during role change: " + e.getMessage());
+        }
     }
 
 

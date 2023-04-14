@@ -11,6 +11,14 @@ import javafx.stage.Stage;
 
 public class FenetreProcessEngineer extends Application{
 
+    String username;
+    String password;
+
+    public FenetreProcessEngineer(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public void start(Stage primaryStage) {
         Label label_fenetre_process_engineer = new Label("Fenetre process engineer");
         label_fenetre_process_engineer.setStyle("-fx-font-size: 16pt; -fx-font-weight: bold;");
@@ -56,10 +64,15 @@ public class FenetreProcessEngineer extends Application{
         Button valider_change_constraints = new Button("Valider");
 
 
-        ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("worker", "process engineer"));
+        ComboBox<String> comboBox_choice_role = new ComboBox<>(FXCollections.observableArrayList("Worker", "Process Engineer"));
         // Configurer le choix déroulant
-        comboBox.setPromptText("Selectionner un role");
-        comboBox.getSelectionModel().selectFirst();
+        comboBox_choice_role.setPromptText("Selectionner un role");
+
+
+        ComboBox<String> comboBox_choice_stand = new ComboBox<>(FXCollections.observableArrayList("Stand F2", "Stand F3"));
+        // Configurer le choix déroulant
+        comboBox_choice_stand.setPromptText("Selectionner un stand");
+        /*comboBox_choice_role.getSelectionModel().selectFirst();*/
 
 
         TextField en_thick_min = new TextField();
@@ -80,29 +93,10 @@ public class FenetreProcessEngineer extends Application{
 
 
 
-        Button repasser_fenetre1 = new Button("Back");
+        Button repasser_fenetre_graphe = new Button("Back");
 
         Button disable_stand = new Button("Disable stand");
         Button enable_stand = new Button("Enable stand");
-
-        Button valider_entry_thickness_min = new Button("Valider");
-
-
-
-        Button valider_exit_thickness_min = new Button("Valider");
-        Button valider_entry_tension_min = new Button("Valider");
-        Button valider_exit_tension_min = new Button("Valider");
-        Button valider_diameter_min = new Button("Valider");
-        Button valider_roll_force_min = new Button("Valider");
-        Button valider_forward_slip_min = new Button("Valider");
-
-        Button valider_entry_thickness_max = new Button("Valider");
-        Button valider_exit_thickness_max = new Button("Valider");
-        Button valider_entry_tension_max = new Button("Valider");
-        Button valider_exit_tension_max = new Button("Valider");
-        Button valider_diameter_max = new Button("Valider");
-        Button valider_roll_force_max = new Button("Valider");
-        Button valider_forward_slip_max = new Button("Valider");
 
 
 
@@ -186,10 +180,30 @@ public class FenetreProcessEngineer extends Application{
 
         primaryStage.setTitle("Fenetre_process_engineer");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
+        ControleurFenetreProcessEngineer controleurFenetreProcessEngineer =
+                new ControleurFenetreProcessEngineer(username, password, text_add_user_username,
+                        text_add_user_mdp, text_remove_user_username, text_update_update_username,
+                        text_update_update_user_new_mdp, text_changer_role_nom_utilisateur, comboBox_choice_role,
+                        en_thick_min, en_thick_max, ex_thick_min, ex_thick_max, en_tens_min, en_tens_max,
+                        ex_tens_min, ex_tens_max, diamater_min, diamater_max, roll_force_min, roll_force_max,
+                        forward_slip_min, forward_slip_max, valider_add_user, valider_remove_user,
+                        valider_update_user, valider_change_roll, valider_change_constraints, repasser_fenetre_graphe);
+
+
+
+        valider_add_user.setOnAction(controleurFenetreProcessEngineer);
+        valider_remove_user.setOnAction(controleurFenetreProcessEngineer);
+        valider_update_user.setOnAction(controleurFenetreProcessEngineer);
+        valider_change_roll.setOnAction(controleurFenetreProcessEngineer);
+        valider_change_constraints.setOnAction(controleurFenetreProcessEngineer);
+        repasser_fenetre_graphe.setOnAction(controleurFenetreProcessEngineer);
+
+
     }
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         launch(args);
-    }
+    }*/
 }

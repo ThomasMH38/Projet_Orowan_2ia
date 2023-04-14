@@ -78,6 +78,7 @@ public class FenetreGraphe extends Application {
 
         primaryStage.setTitle("Fenêtre1");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
         ControleurFenetreGraphe controleurFenetreGraphe =

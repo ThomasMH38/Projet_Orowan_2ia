@@ -9,9 +9,45 @@ import java.util.Collection;
 
 public class CsvInputs extends Bdd{
 
+    double he_min;
+    double he_max;
+    double hs_min;
+    double hs_max;
+    double te_min;
+    double te_max;
+    double ts_min;
+    double ts_max;
+    double force_min;
+    double force_max;
+    double g_min;
+    double g_max;
+    double diamWr_min;
+    double diamWr_max;
+    double wrYoung_min;
+    double wrYoung_max;
+    double muIni_min;
+    double muIni_max;
 
     public CsvInputs(){
         super(Bdd.dbConnection);
+        this.he_min = 1;
+        this.he_max = 70;
+        this.hs_min = 1;
+        this.hs_max = 70;
+        this.te_min = 0;
+        this.te_max = 50;
+        this.ts_min = 0;
+        this.ts_max = 50;
+        this.force_min = 0;
+        this.force_max = 5000;
+        this.g_min = 0;
+        this.g_max = 20;
+        this.diamWr_min = 500;
+        this.diamWr_max = 1500;
+        this.wrYoung_min = 120000;
+        this.wrYoung_max = 250000;
+        this.muIni_min = 0.05;
+        this.muIni_max = 1;
     }
 
     @Override
@@ -63,10 +99,11 @@ public class CsvInputs extends Bdd{
 
         boolean insertLine = true;
 
-        if (he < 1 || he > 70 || hs < 1 || hs > 70 ||
-                te < 0 || te > 50 || ts < 0 || ts > 50 || force < 0 || force > 5000 ||
-                g < 0 || g > 20 || diamWr < 500 || diamWr > 1500 ||
-                wrYoung < 120000 || wrYoung > 250000 || muIni < 0.05 || muIni > 1) {
+        if (he < he_min || he > he_max || hs < hs_min || hs > hs_max ||
+                te < te_min || te > te_max || ts < ts_min || ts > ts_max ||
+                force < force_min || force > force_max ||
+                g < g_min || g > g_max || diamWr < diamWr_min || diamWr > diamWr_max ||
+                wrYoung < wrYoung_min || wrYoung > wrYoung_max || muIni < muIni_min || muIni > muIni_max) {
             insertLine = false;
         }
         if (insertLine) {

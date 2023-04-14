@@ -11,12 +11,34 @@ import java.util.Optional;
 
 public class ControleurFenetreProcessEngineer implements EventHandler<ActionEvent> {
 
+    String username;
+    String password;
+
     TextField text_add_user_username;
     PasswordField text_add_user_mdp;
     TextField text_remove_user_username;
     TextField text_update_update_username;
     PasswordField text_update_update_user_new_mdp;
     TextField text_changer_role_nom_utilisateur;
+    ComboBox<String> comboBox_choice_role;
+
+
+    TextField en_thick_min;
+    TextField en_thick_max;
+    TextField ex_thick_min;
+    TextField ex_thick_max;
+    TextField en_tens_min;
+    TextField en_tens_max;
+    TextField ex_tens_min;
+    TextField ex_tens_max;
+    TextField diamater_min;
+    TextField diamater_max;
+    TextField roll_force_min;
+    TextField roll_force_max;
+    TextField forward_slip_min;
+    TextField forward_slip_max;
+
+
     Button valider_add_user;
     Button valider_remove_user;
     Button valider_update_user;
@@ -25,17 +47,40 @@ public class ControleurFenetreProcessEngineer implements EventHandler<ActionEven
     Button repasser_fenetre_graphe;
 
     Utilisateurs utilisateurs;
+    FileFormats fileFormats;
 
-    public ControleurFenetreProcessEngineer(TextField text_add_user_username,
+    public ControleurFenetreProcessEngineer(String username,
+                                            String password,
+                                            TextField text_add_user_username,
                                             PasswordField text_add_user_mdp,
                                             TextField text_remove_user_username,
                                             TextField text_update_update_username,
                                             PasswordField text_update_update_user_new_mdp,
                                             TextField text_changer_role_nom_utilisateur,
+                                            ComboBox<String> comboBox_choice_role,
+                                            TextField en_thick_min,
+                                            TextField en_thick_max,
+                                            TextField ex_thick_min,
+                                            TextField ex_thick_max,
+                                            TextField en_tens_min,
+                                            TextField en_tens_max,
+                                            TextField ex_tens_min,
+                                            TextField ex_tens_max,
+                                            TextField diamater_min,
+                                            TextField diamater_max,
+                                            TextField roll_force_min,
+                                            TextField roll_force_max,
+                                            TextField forward_slip_min,
+                                            TextField forward_slip_max,
                                             Button valider_add_user,
                                             Button valider_remove_user,
                                             Button valider_update_user,
-                                            Button valider_change_roll) {
+                                            Button valider_change_roll,
+                                            Button valider_change_constraints,
+                                            Button repasser_fenetre_graphe) {
+
+        this.username = username;
+        this.password = password;
 
         this.text_add_user_username = text_add_user_username;
         this.text_add_user_mdp = text_add_user_mdp;
@@ -43,12 +88,48 @@ public class ControleurFenetreProcessEngineer implements EventHandler<ActionEven
         this.text_update_update_username = text_update_update_username;
         this.text_update_update_user_new_mdp = text_update_update_user_new_mdp;
         this.text_changer_role_nom_utilisateur = text_changer_role_nom_utilisateur;
+        this.comboBox_choice_role = comboBox_choice_role;
+
+        this.en_thick_min = en_thick_min;
+        this.en_thick_max = en_thick_max;
+        this.ex_thick_min = ex_thick_min;
+        this.ex_thick_max = ex_thick_max;
+        this.en_tens_min = en_tens_min;
+        this.en_tens_max = en_tens_max;
+        this.ex_tens_min = ex_tens_min;
+        this.ex_tens_max = ex_tens_max;
+        this.diamater_min = diamater_min;
+        this.diamater_max = diamater_max;
+        this.roll_force_min = roll_force_min;
+        this.roll_force_max = roll_force_max;
+        this.forward_slip_min = forward_slip_min;
+        this.forward_slip_max = forward_slip_max;
+
         this.valider_add_user = valider_add_user;
         this.valider_remove_user = valider_remove_user;
         this.valider_update_user = valider_update_user;
         this.valider_change_roll = valider_change_roll;
+        this.valider_change_constraints = valider_change_constraints;
+        this.repasser_fenetre_graphe = repasser_fenetre_graphe;
 
         this.utilisateurs = new Utilisateurs();
+        this.fileFormats = new FileFormats();
+
+
+        en_thick_min.appendText(String.valueOf(fileFormats.enThick_min));
+        en_thick_max.appendText(String.valueOf(fileFormats.enThick_max));
+        ex_thick_min.appendText(String.valueOf(fileFormats.exThick_min));
+        ex_thick_max.appendText(String.valueOf(fileFormats.exThick_max));
+        en_tens_min.appendText(String.valueOf(fileFormats.enTens_min));
+        en_tens_max.appendText(String.valueOf(fileFormats.enTens_max));
+        ex_tens_min.appendText(String.valueOf(fileFormats.exTens_min));
+        ex_tens_max.appendText(String.valueOf(fileFormats.exTens_max));
+        diamater_min.appendText(String.valueOf(fileFormats.daiameter_max));
+        diamater_max.appendText(String.valueOf(fileFormats.daiameter_max));
+        roll_force_min.appendText(String.valueOf(fileFormats.rollForce_min));
+        roll_force_max.appendText(String.valueOf(fileFormats.rollForce_max));
+        forward_slip_min.appendText(String.valueOf(fileFormats.fSlip_min));
+        forward_slip_max.appendText(String.valueOf(fileFormats.fSlip_max));
     }
 
     @Override
@@ -59,16 +140,33 @@ public class ControleurFenetreProcessEngineer implements EventHandler<ActionEven
             String username = text_add_user_username.getText();
             String mdp = text_add_user_mdp.getText();
 
-            if (utilisateurs.verifConnexion(username, mdp)) {
+            if (utilisateurs.verifSameName(username)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur");
                 alert.setHeaderText(null);
-                alert.setContentText("Cet identifiant est déjà utilisé");
+                alert.setContentText("Cet identifiant est déjà utilisé.");
                 alert.showAndWait();
-            } else {
+            }
+            if(username.length() < 3 || mdp.length() < 5){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("L'identifiant ou le mot de passe est trop court.");
+                alert.setContentText("Minimum identifiant : 3 charactères \n " +
+                        "Minimum mot de passe : 5 charactères");
+                alert.showAndWait();
+            }
+            else {
                 String[] columns = {username, mdp, "Worker"};
                 utilisateurs.insert(columns);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Opération réussie");
+                alert.setHeaderText(null);
+                alert.setContentText("L'utilisateur a été créé.");
+                alert.showAndWait();
             }
+
+            text_add_user_username.clear();
+            text_add_user_mdp.clear();
         }
 
         if (event.getSource() == valider_remove_user) {
