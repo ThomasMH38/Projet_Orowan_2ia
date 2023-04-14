@@ -83,6 +83,20 @@ public class Utilisateurs extends Bdd{
         }
     }
 
+    public boolean verifSameName(String nom) {
+        String query = "SELECT COUNT(*) FROM Utilisateur WHERE Nom = ?";
+        try (PreparedStatement pstmt = dbConnection.prepareStatement(query)) {
+            pstmt.setString(1, nom);
+            ResultSet rs = pstmt.executeQuery();
+            // retourne la valeur de la première colonne de la ligne courante du résultat de la requête SQL sous forme d'un entier
+            rs.next();
+            return rs.getInt(1) > 0;
+        } catch (SQLException e) {
+            System.err.println("Error during authentication: " + e.getMessage());
+            return false;
+        }
+    }
+
     public String getRole(String nom, String motDePasse) {
         String role = null;
         String query = "SELECT Role FROM Utilisateur WHERE Nom = ? AND MotDePasse = ?";

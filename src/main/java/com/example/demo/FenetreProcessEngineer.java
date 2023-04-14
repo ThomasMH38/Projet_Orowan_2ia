@@ -12,27 +12,21 @@ import javafx.stage.Stage;
 public class FenetreProcessEngineer extends Application{
 
     public void start(Stage primaryStage) {
-        // Créer les composants de la fenêtre
-        // Label fenetre1 = new Label("Fenêtre1");
-        // TextField textField1 = new TextField();
-        // Button valider = new Button("Valider");
-
         Label label_fenetre_process_engineer = new Label("Fenetre process engineer");
+        label_fenetre_process_engineer.setStyle("-fx-font-size: 16pt; -fx-font-weight: bold;");
         Label label_add_user = new Label("Add user");
         Label label_add_user_username = new Label("Username");
         Label label_add_user_password = new Label("Password");
         Label label_remove_user = new Label("Remove user");
         Label label_remove_user_username = new Label("Username");
-        Label label_remove_user_password = new Label("Password");
         Label label_update_user = new Label("Change role");
-        Label label_update_user_old_username = new Label("Old username");
-        Label label_update_user_old_password = new Label("Old password");
-        Label label_update_user_new_username = new Label("New username");
+        Label label_update_username = new Label("Username");
         Label label_update_user_new_password = new Label("New password");
         Label label_change_roll = new Label("Change password");
         Label label_change_roll_username = new Label("Username");
         Label label_change_roll_new_roll = new Label("New role");
-        Label label_settings = new Label("Settings");
+        Label label_constraints = new Label("Constraints");
+        label_constraints.setStyle("-fx-font-size: 16pt; -fx-font-weight: bold;");
 
         Label label_min = new Label("Min");
         Label label_max = new Label("Max");
@@ -51,10 +45,7 @@ public class FenetreProcessEngineer extends Application{
         TextField text_add_user_username = new TextField();
         PasswordField text_add_user_mdp = new PasswordField();
         TextField text_remove_user_username = new TextField();
-        PasswordField text_remove_user_mdp = new PasswordField();
-        TextField text_update_update_user_old_username = new TextField();
-        TextField text_update_update_user_new_username = new TextField();
-        PasswordField text_update_update_user_old_mdp = new PasswordField();
+        TextField text_update_update_username = new TextField();
         PasswordField text_update_update_user_new_mdp = new PasswordField();
         TextField text_changer_role_nom_utilisateur = new TextField();
 
@@ -62,15 +53,7 @@ public class FenetreProcessEngineer extends Application{
         Button valider_remove_user = new Button("Valider");
         Button valider_update_user = new Button("Valider");
         Button valider_change_roll = new Button("Valider");
-
-        ControleurFenetreProcessEngineer controleurFenetreProcessEngineer =
-                new ControleurFenetreProcessEngineer(text_add_user_username, text_add_user_mdp,
-                        text_remove_user_username, text_remove_user_mdp,
-                        text_update_update_user_old_username, text_update_update_user_new_username,
-                        text_update_update_user_old_mdp, text_update_update_user_new_mdp,
-                        text_changer_role_nom_utilisateur, valider_add_user, valider_remove_user,
-                        valider_update_user, valider_change_roll);
-
+        Button valider_change_constraints = new Button("Valider");
 
 
         ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("worker", "process engineer"));
@@ -131,7 +114,7 @@ public class FenetreProcessEngineer extends Application{
         gridPane.setPadding(new Insets(25, 25, 25, 25));
 
         gridPane.add(label_fenetre_process_engineer, 3, 0);
-        gridPane.add(repasser_fenetre1, 0, 0);
+        gridPane.add(repasser_fenetre_graphe, 0, 0);
 
         gridPane.add(label_add_user, 0, 1);
         gridPane.add(label_add_user_username, 1, 1);
@@ -143,33 +126,29 @@ public class FenetreProcessEngineer extends Application{
         gridPane.add(label_remove_user, 0, 2);
         gridPane.add(label_remove_user_username, 1, 2);
         gridPane.add(text_remove_user_username, 2, 2);
-        gridPane.add(label_remove_user_password, 3, 2);
-        gridPane.add(text_remove_user_mdp, 4, 2);
-        gridPane.add(valider_remove_user, 5, 2);
+        gridPane.add(valider_remove_user, 3, 2);
 
         gridPane.add(label_update_user, 0, 3);
-        gridPane.add(label_update_user_old_username, 1, 3);
-        gridPane.add(text_update_update_user_old_username, 2, 3);
-        gridPane.add(label_update_user_old_password, 3, 3);
-        gridPane.add(text_update_update_user_old_mdp, 4, 3);
-        gridPane.add(label_update_user_new_username, 5, 3);
-        gridPane.add(text_update_update_user_new_username, 6, 3);
-        gridPane.add(label_update_user_new_password, 7, 3);
-        gridPane.add(text_update_update_user_new_mdp, 8, 3);
-        gridPane.add(valider_update_user, 9, 3);
+        gridPane.add(label_update_username, 1, 3);
+        gridPane.add(text_update_update_username, 2, 3);
+        gridPane.add(label_update_user_new_password, 3, 3);
+        gridPane.add(text_update_update_user_new_mdp, 4, 3);
+        gridPane.add(valider_update_user, 5, 3);
 
 
         gridPane.add(label_change_roll, 0, 4);
         gridPane.add(label_change_roll_username, 1, 4);
         gridPane.add(text_changer_role_nom_utilisateur, 2, 4);
         gridPane.add(label_change_roll_new_roll, 3, 4);
-        gridPane.add(comboBox, 4, 4);
+        gridPane.add(comboBox_choice_role, 4, 4);
         gridPane.add(valider_change_roll, 5, 4);
 
-        gridPane.add(label_settings, 0, 5);
+        gridPane.add(label_constraints, 0, 6);
+        gridPane.add(valider_change_constraints,0,7);
 
-        gridPane.add(disable_stand, 0, 6);
-        gridPane.add(enable_stand, 2, 6);
+        gridPane.add(comboBox_choice_stand,0,5);
+        gridPane.add(disable_stand, 1, 5);
+        gridPane.add(enable_stand, 2, 5);
 
         gridPane.add(label_min, 1, 7);
         gridPane.add(label_max, 3, 7);
@@ -199,24 +178,6 @@ public class FenetreProcessEngineer extends Application{
         gridPane.add(forward_slip_min, 1, 14);
         gridPane.add(forward_slip_max, 3, 14);
 
-
-
-        gridPane.add(valider_entry_thickness_min, 2, 8);
-        gridPane.add(valider_entry_thickness_max, 4, 8);
-
-        gridPane.add(valider_exit_thickness_min, 2, 9);
-        gridPane.add(valider_entry_tension_min, 2, 10);
-        gridPane.add(valider_exit_tension_min, 2, 11);
-        gridPane.add(valider_diameter_min, 2, 12);
-        gridPane.add(valider_roll_force_min, 2, 13);
-        gridPane.add(valider_forward_slip_min, 2, 14);
-
-        gridPane.add(valider_exit_thickness_max, 4, 9);
-        gridPane.add(valider_entry_tension_max, 4, 10);
-        gridPane.add(valider_exit_tension_max, 4, 11);
-        gridPane.add(valider_diameter_max, 4, 12);
-        gridPane.add(valider_roll_force_max, 4, 13);
-        gridPane.add(valider_forward_slip_max, 4, 14);
 
 
 
