@@ -27,10 +27,10 @@ public class FenetreProcessEngineer extends Application{
         Label label_add_user_password = new Label("Password");
         Label label_remove_user = new Label("Remove user");
         Label label_remove_user_username = new Label("Username");
-        Label label_update_user = new Label("Change role");
+        Label label_update_user = new Label("Change password");
         Label label_update_username = new Label("Username");
         Label label_update_user_new_password = new Label("New password");
-        Label label_change_roll = new Label("Change password");
+        Label label_change_roll = new Label("Change role");
         Label label_change_roll_username = new Label("Username");
         Label label_change_roll_new_roll = new Label("New role");
         Label label_constraints = new Label("Constraints");
