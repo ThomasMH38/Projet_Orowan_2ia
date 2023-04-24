@@ -27,7 +27,7 @@ public class FenetreGraphe extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Créer les composants de la fenêtre
-        Label fenetre1 = new Label("Fenêtre1");
+        Label fenetre1 = new Label("Fenetre des graphes");
         fenetre1.setStyle("-fx-font-size: 16pt; -fx-font-weight: bold;");
         Label calcul_time = new Label("Calcul Time:");
         TextField textField1 = new TextField();
